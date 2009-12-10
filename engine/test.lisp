@@ -1,0 +1,5 @@
+(setq operation 'pipe)
+(setq newname 'balls)
+(setq decl1 '(defun plus (x y) (+ x y)))
+(setq decl2 '(defun times (x y) (* x y)))
+(setq n 0)
