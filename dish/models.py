@@ -14,4 +14,4 @@ class Dish(models.Model):
 	def __unicode__(self):
 		return self.name
 	def organisms(self):
-		return Article.objects.filter(dish=self.pk, generation = self.generation)
+		return Organism.objects.filter(dish=self.pk, generation = self.generation)
