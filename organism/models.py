@@ -10,3 +10,5 @@ class Organism(models.Model):
 	born = models.DateTimeField('birthdate')
 	dish = models.ForeignKey('dish.Dish')
 	generation = models.IntegerField()
+	def bred(self, mate):
+		pass

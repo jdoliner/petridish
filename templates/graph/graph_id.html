@@ -1,0 +1,16 @@
+<p> Vertices: </p>
+{% if V %}
+	{% for v in V %}
+		<li> {{v.id }} </li>
+	{% endfor %}
+{% else %}
+	<p> Emptyset </p>
+{% endif %}
+<p> Edges: </p>
+{% if E %}
+	{% for e in E %}
+		<li> {{ e.id }}: ({{e.fr.id}}, {{e.to.id}}) </li>
+	{% endfor %}
+{% else %}
+	<p> Emptyset </p>
+{% endif %}

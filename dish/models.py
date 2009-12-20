@@ -1,9 +1,6 @@
 from django.db import models
 
-try:
-	from petridish.organism.models import Organism
-except:
-	pass
+from petridish.organism.models import Organism
 
 # Create your models here.
 

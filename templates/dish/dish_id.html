@@ -1,0 +1,7 @@
+<p>Name: {{dish.name}}   -  Born: {{dish.born}}</p>
+<p> Generation: {{dish.generation}} </p>
+<p> Organisms </p>
+{% for organism in organisms %}
+	{% url petridish.organism.views.organism_id organism.id as organism_url %}
+	<li><a href="{{ organism_url}}">{{organism.id}}</a></li>
+{% endfor %}
