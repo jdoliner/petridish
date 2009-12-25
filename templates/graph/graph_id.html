@@ -1,3 +1,6 @@
+{% extends "organism/organism_id.html" %}
+
+{% block data %}
 <p> Vertices: </p>
 {% if V %}
 	{% for v in V %}
@@ -14,3 +17,4 @@
 {% else %}
 	<p> Emptyset </p>
 {% endif %}
+{% endblock %}

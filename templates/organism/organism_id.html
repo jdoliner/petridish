@@ -1,4 +1,4 @@
-<p> Organism </p>
-<p>{{organism.id}} - Born: {{organism.born}}</p>
+<p> Organism: {{organism.id}} - Born: {{organism.born}}</p>
 {% url petridish.dish.views.dish_id organism.dish.id as dish_url %}
 <p>Dish: <a href="{{dish_url}}"> {{organism.dish}} </a> - Generation:{{organism.generation}}</p>
+{% block data %} This template has been called on an abstraction, and thus has no data. Something has gone wrong {% endblock %}
