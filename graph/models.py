@@ -31,7 +31,6 @@ class Edge(models.Model):
 		return [fr, to]
 
 class Graph(Organism):
-	data_type = 0
 	def v(self):
 		return Vertex.objects.filter(graph=self.pk)
 	def e(self):
