@@ -71,8 +71,8 @@ class Graph(Organism):
 		for olde in E:
 			newe = Edge()
 			newe.graph = self
-			newe.fr = mapping[olde.fr]
-			newe.to = mapping[olde.to]
+			newe.fr = old_to_new[olde.fr]
+			newe.to = old_to_new[olde.to]
 			newe.save()
 		
 	def breed_subg_swp(self, mate):

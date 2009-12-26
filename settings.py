@@ -81,4 +81,5 @@ INSTALLED_APPS = (
     'petridish.organism',
     'petridish.dish',
     'petridish.graph',
+    'petridish.function',
 )
