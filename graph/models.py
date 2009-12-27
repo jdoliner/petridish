@@ -23,6 +23,9 @@ class Graph(Organism):
 				newedges = newedges + '{' + str(fr) + ',' + str(to) + '}'
 		self.edges = self.edges + newedges
 		self.save()
+	def cleare(self):
+		self.edges = ''
+		self.save()
 	def breed_subg_swp(self, mate):
 		selfv = self.v()
 		matev = mate.v()
@@ -52,10 +55,11 @@ class Graph(Organism):
 		g.dish = self.dish
 		g.G(list(selfsubg) + list(matesubg), list(selfe_internal) + list(matee_internal) + list(selfe_cross) + list(matee_cross))
 	def random(self, size, p):
-		self.sanitize()
-		for i in range(size):
-			self.addv()
-		for fr in self.v():
-			for to in list(set(self.v()) - set([fr])): #no loops
-				if(random.random() < p):
-					self.adde(fr,to)
+		self.num_v = size
+		edges = []
+		for fr in range(size):
+			for to in range(size):
+				if(random.random() < p and fr != to):
+					edges.append((fr,to))
+		self.cleare()
+		self.adde(edges)

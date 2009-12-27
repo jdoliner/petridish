@@ -1,18 +1,11 @@
 {% extends "organism/organism_id.html" %}
 
 {% block data %}
-<p> Vertices: </p>
-{% if V %}
-	{% for v in V %}
-		<li> {{v.id }} </li>
-	{% endfor %}
-{% else %}
-	<p> Emptyset </p>
-{% endif %}
+<p> Vertices: {{V}}</p>
 <p> Edges: </p>
 {% if E %}
-	{% for e in E %}
-		<li> {{ e.id }}: ({{e.fr.id}}, {{e.to.id}}) </li>
+	{% for fr, to in E %}
+		<li> ({{fr}}, {{to}}) </li>
 	{% endfor %}
 {% else %}
 	<p> Emptyset </p>
