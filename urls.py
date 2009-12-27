@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 	(r'^dish/(?P<dish_id>\d+)/$', 'petridish.dish.views.dish_id'),
 	(r'^dish/(?P<dish_id>\d+)/generation=(?P<generation>\d+)/$', 'petridish.dish.views.dish_id'),
 	(r'^organism/(?P<organism_id>\d+)/$', 'petridish.organism.views.organism_id'),
+	(r'^breed/$', 'petridish.graph.views.breed'),
 )

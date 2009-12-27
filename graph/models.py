@@ -1,12 +1,16 @@
 from django.db import models
+from django import forms
 import random
 import re
 from petridish.organism.models import Organism
+
 
 class Graph(Organism):
 	num_v = models.IntegerField()
 	edges = models.TextField()
 	regex = re.compile('{(\d*),(\d*)}')
+	def __unicode__(self):
+		return 'Graph: ' + unicode(self.id)
 	def e(self):
 		return map(lambda x: (int(x[0]), int(x[1])), self.regex.findall(self.edges))
 	def addv(self):
@@ -58,6 +62,7 @@ class Graph(Organism):
 		g.init(self.dish, self.generation + 1)
 		g.num_v = len(selfsubg) + len(matesubg)
 		g.adde(selfe_internal + matee_internal + selfe_cross + matee_cross)
+		return g
 	def random(self, size, p):
 		self.num_v = size
 		edges = []
@@ -67,3 +72,7 @@ class Graph(Organism):
 					edges.append((fr,to))
 		self.cleare()
 		self.adde(edges)
+
+class Breed(forms.Form):
+	sire = forms.ModelChoiceField(queryset = Graph.objects.filter(dish = 1))
+	dame = forms.ModelChoiceField(queryset = Graph.objects.filter(dish = 1))
