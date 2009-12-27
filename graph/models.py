@@ -1,10 +1,7 @@
 from django.db import models
 import random
 import re
-try:
-	from petridish.organism.models import Organism
-except:
-	pass
+from petridish.organism.models import Organism
 
 class Graph(Organism):
 	num_v = models.IntegerField()

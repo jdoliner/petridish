@@ -7,7 +7,7 @@ def organism_id(request, organism_id):
 	organism = Organism.objects.get(pk = organism_id)
 	try:
 		organism.graph
-	except organism.DoesNotExist:
+	except:
 		pass
 	else:
 		return graph_id(request, organism_id)

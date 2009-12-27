@@ -1,9 +1,6 @@
 from django.db import models
 import datetime
-try:
-	from petridish.dish.models import Dish
-except:
-	pass
+from petridish.dish.models import Dish
 
 # Create your models here.
 
