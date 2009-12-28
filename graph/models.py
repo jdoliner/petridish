@@ -3,6 +3,7 @@ from django import forms
 import random
 import re
 from petridish.organism.models import Organism
+from petridish.dish.models import Dish
 
 
 class Graph(Organism):
@@ -73,6 +74,18 @@ class Graph(Organism):
 		self.cleare()
 		self.adde(edges)
 
-class Breed(forms.Form):
+class Breed_form(forms.Form):
 	sire = forms.ModelChoiceField(queryset = Graph.objects.filter(dish = 1))
 	dame = forms.ModelChoiceField(queryset = Graph.objects.filter(dish = 1))
+
+def Populate(dish, pop_size, graph_size, p):
+	for i in range(pop_size):
+		g = Graph()
+		g.init(dish, 0)
+		g.random(graph_size, p)
+
+class Populate_form(forms.Form):
+	dish = forms.ModelChoiceField(queryset = Dish.objects)
+	pop_size = forms.IntegerField()
+	graph_size = forms.IntegerField()
+	p = forms.FloatField()
