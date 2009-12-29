@@ -12,8 +12,8 @@ class Organism(models.Model):
 	def init(self, dish, generation):
 		self.fitness = -2
 		self.born = datetime.datetime.now()
-		if (type(dish) == int):
-			self.dish = Dish.objects.get(id = dish)
-		else:
+		if (type(dish) == Dish):
 			self.dish = dish
+		else:
+			self.dish = Dish.objects.get(id = dish)
 		self.generation = generation
