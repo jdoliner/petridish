@@ -9,3 +9,5 @@ class Dish(models.Model):
 	def __unicode__(self):
 		return self.name
 
+class Populate_form(forms.Form):
+	type = forms.ChoiceField([('graph', 'graph')])

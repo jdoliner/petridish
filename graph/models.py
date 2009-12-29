@@ -85,7 +85,6 @@ def Populate(dish, pop_size, graph_size, p):
 		g.random(graph_size, p)
 
 class Populate_form(forms.Form):
-	dish = forms.ModelChoiceField(queryset = Dish.objects)
 	pop_size = forms.IntegerField()
 	graph_size = forms.IntegerField()
 	p = forms.FloatField()

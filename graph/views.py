@@ -22,18 +22,16 @@ def breed(request):
 		form = Breed_form()
 		return render_to_response('graph/breed.html', {'form': form})
 
-def populate(request, d = None):
+def populate(request, dish_id):
 	if (request.method == 'POST'):
 		form = Populate_form(request.POST)
 		if form.is_valid():
-			dish = form.cleaned_data['dish']
 			pop_size = form.cleaned_data['pop_size']
 			graph_size = form.cleaned_data['graph_size']
 			p = form.cleaned_data['p']
-			import pdb
-			pdb.set_trace()
-			Populate(dish, pop_size, graph_size, p)
-			return dish_id(request, dish.id) 
+			Populate(dish_id, pop_size, graph_size, p)
+			from petridish.dish.views import dish_id
+			return dish_id(request, dish_id) 
 	else:
 		form = Populate_form()
 		return render_to_response('graph/populate.html', {'form': form})
