@@ -15,16 +15,14 @@ class Function(models.Model):
 	def call(self, args):
 		if (len(args) != self.num_args):
 			assert(0)
-		import pdb
-		pdb.set_trace()
 		code = self.code + '\n' + 'function_name_dummy = ' + self.name + '\n'
 		try:
 			exec(code)
 		except:
 			pass
 		else:
-			pass
-			#return function_name_dummy(args)
+			return function_name_dummy(*args)
+			
 
 class Fitness_Function(Function):
 	def eval_fitness(self):
