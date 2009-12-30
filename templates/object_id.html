@@ -1,0 +1,16 @@
+{% block tools %}
+{% if tools %}
+	<p>
+	{% for name, url in tools %}
+		<a href={{url}}> {{name}} </a>
+	{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block header %}
+No header block provided.
+{% endblock %}
+
+{% block data %}
+No data block provided.
+{% endblock %}

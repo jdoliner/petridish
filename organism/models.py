@@ -17,3 +17,12 @@ class Organism(models.Model):
 		else:
 			self.dish = Dish.objects.get(id = dish)
 		self.generation = generation
+	def unabstract(self):
+		from petridish.graph.models import graph
+		try:
+			self.graph
+		except:
+			pass
+		else:
+			return self.graph
+		assert(0)

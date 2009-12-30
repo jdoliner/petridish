@@ -14,3 +14,7 @@ def organism_id(request, organism_id):
 	template = loader.get_template('organism/organism_id.html')
 	context = Context({'organism': organism})
 	return HttpResponse(template.render(context))
+
+def delete(request, organism_id):
+	organism = Organism.objects.get(pk = organism_id)
+	organism.delete()
