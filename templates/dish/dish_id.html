@@ -2,7 +2,8 @@
 
 {% block header %}
 <p>Name: {{dish.name}}   -  Born: {{dish.born}}</p>
-<p> Generation: {{dish.generation}} </p>
+{% url petridish.function.views.function_id fitness_function.id as ff_url %} 
+<p> Generation: {{dish.generation}}  - Fitness Function: <a href="{{ff_url}}">{{fitness_function.name}}</a> </p>
 {% endblock %}
 
 {% block data %}

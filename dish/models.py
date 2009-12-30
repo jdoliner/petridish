@@ -3,7 +3,7 @@ from django import forms
 from datetime import datetime
 
 class Dish(models.Model):
-	name = models.CharField(max_length=200)
+	name = models.CharField(max_length=20)
 	fitness = models.ForeignKey('function.Fitness_Function', null=True)
 	generation = models.IntegerField()
 	born = models.DateTimeField('birthdate')
@@ -28,8 +28,14 @@ class Dish(models.Model):
 				o.fitness = -1
 			o.save()
 
-class Dish_Form(forms.Form):
-	name = forms.CharField(max_length=200)
+class Dish_form(forms.Form):
+	name = forms.CharField(max_length=20)
 
 class Populate_form(forms.Form):
 	type = forms.ChoiceField([('graph', 'graph')])
+
+class Properties_form(forms.Form):
+	from petridish.function.models import Fitness_Function
+	name = forms.CharField(max_length=20)
+	functions = Fitness_Function.objects.all()
+	fitness_f = forms.ChoiceField(map(lambda f: (f.id, f.name), functions))

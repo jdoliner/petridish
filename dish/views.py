@@ -2,12 +2,13 @@ from django.template import Context, loader
 from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpRequest
-from petridish.dish.models import Dish, Populate_form, Dish_Form
+from petridish.dish.models import Dish
 from petridish.organism.models import Organism 
 
 def new(request):
+	from petridish.models import Dish_form
 	if (request.method == 'POST'):
-		form = Dish_Form(request.POST)
+		form = Dish_form(request.POST)
 		if(form.is_valid()):
 			name = form.cleaned_data['name']
 			dish = Dish()
@@ -15,8 +16,25 @@ def new(request):
 			dish.save()
 			return redirect(dish_id, d_id = dish.id)
 	else:
-		form = Dish_Form()
+		form = Dish_form()
 		return render_to_response('dish/new.html', {'action': reverse(new), 'form': form})
+
+def properties(request, d_id):
+	from petridish.dish.models import Properties_form
+	if (request.method == 'POST'):
+		form = Properties_form(request.POST)
+		if(form.is_valid()):
+			from petridish.function.models import Fitness_Function
+			dish = Dish.objects.get(pk = d_id)
+			dish.name = form.cleaned_data['name']
+			id = form.cleaned_data['fitness_f']
+			function = Fitness_Function.objects.get(id = id)
+			dish.function = function
+			dish.save()
+			return redirect(dish_id, d_id = dish.id)
+	else:
+		form = Properties_form()
+		return render_to_response('dish/properties.html', {'action': reverse(properties, args = [d_id]), 'form': form})
 
 def dishes_toolbar():
 	tools = []
@@ -32,6 +50,7 @@ def dish_id_toolbar(d_id):
 	tools = []
 	tools.append(('My Dishes', reverse(dish))),
 	tools.append(('Populate', reverse(populate, args = [d_id])))
+	tools.append(('Properties', reverse(properties, args = [d_id])))
 	tools.append(('Clear', reverse(clear, args = [d_id])))
 	tools.append(('Delete', reverse(delete, args = [d_id])))
 	return tools
@@ -40,10 +59,11 @@ def dish_id(request, d_id):
 	dish = Dish.objects.get(pk = d_id)
 	organisms = Organism.objects.filter(dish = dish)
 	template = loader.get_template('dish/dish_id.html')
-	context = Context({'dish': dish, 'organisms': organisms, 'tools': dish_id_toolbar(d_id)})
+	context = Context({'dish': dish, 'fitness_function': dish.fitness, 'organisms': organisms, 'tools': dish_id_toolbar(d_id)})
 	return HttpResponse(template.render(context))
 
 def populate(request, d_id):
+	from petridish.dish.models import Populate_form
 	from petridish.graph.views import populate as graph_populate
 	if (request.method == 'POST'):
 		form = Populate_form(request.POST)	
