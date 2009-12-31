@@ -31,7 +31,7 @@ class Graph(Organism):
 	def cleare(self):
 		self.edges = ''
 		self.save()
-	def breed_subg_swp(self, mate):
+	def breed(self, mate):
 		selfv = range(self.num_v)
 		selfe = self.e()
 		matev = range(self.num_v, self.num_v + mate.num_v)

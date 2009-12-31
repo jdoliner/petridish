@@ -10,7 +10,7 @@ class Organism(models.Model):
 	generation = models.IntegerField()
 	fitness = models.IntegerField()
 	def init(self, dish, generation):
-		self.fitness = -2
+		self.fitness = 0
 		self.born = datetime.datetime.now()
 		if (type(dish) == Dish):
 			self.dish = dish
@@ -18,7 +18,6 @@ class Organism(models.Model):
 			self.dish = Dish.objects.get(id = dish)
 		self.generation = generation
 	def unabstract(self):
-		from petridish.graph.models import graph
 		try:
 			self.graph
 		except:
@@ -26,3 +25,5 @@ class Organism(models.Model):
 		else:
 			return self.graph
 		assert(0)
+	def breed(self, mate):
+		return self.unabstract().breed(mate.unabstract())

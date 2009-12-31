@@ -6,7 +6,7 @@ from petridish.dish.models import Dish
 from petridish.organism.models import Organism 
 
 def new(request):
-	from petridish.models import Dish_form
+	from petridish.dish.models import Dish_form
 	if (request.method == 'POST'):
 		form = Dish_form(request.POST)
 		if(form.is_valid()):
@@ -57,10 +57,8 @@ def dish_id_toolbar(d_id):
 
 def dish_id(request, d_id):
 	dish = Dish.objects.get(pk = d_id)
-	organisms = Organism.objects.filter(dish = dish)
-	template = loader.get_template('dish/dish_id.html')
-	context = Context({'dish': dish, 'fitness_function': dish.fitness, 'organisms': organisms, 'tools': dish_id_toolbar(d_id)})
-	return HttpResponse(template.render(context))
+	organisms = dish.organisms()
+	return render_to_response('dish/dish_id.html', {'dish': dish, 'fitness_function': dish.fitness, 'organisms': organisms, 'tools': dish_id_toolbar(d_id)})
 
 def populate(request, d_id):
 	from petridish.dish.models import Populate_form
@@ -93,6 +91,6 @@ def clear(request, d_id):
 
 def delete(request, d_id):
 	clear(request, d_id)
-	dish = Dish.objects.get(pk = d_id)
-	dish.delete()
+	d = Dish.objects.get(pk = d_id)
+	d.delete()
 	return redirect(dish) 
