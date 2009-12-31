@@ -6,6 +6,8 @@ class Function(models.Model):
 	name = models.CharField(max_length=20)
 	num_args = models.IntegerField()
 	code = models.TextField()
+	def __unicode__(self):
+		return self.name
 	def parse(self, code):
 		parse = re.search(r'^def (\w+)\(([a-zA-Z0-9_, ]*)\):(.*)', code, re.DOTALL)
 		self.name = parse.group(1)

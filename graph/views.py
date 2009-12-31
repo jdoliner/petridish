@@ -1,5 +1,5 @@
 from django.template import Context, loader
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
 from petridish.graph.models import Graph, Breed_form, Populate_form, Populate
 from petridish.dish.views import dish_id
@@ -31,7 +31,9 @@ def populate(request, d_id):
 			graph_size = form.cleaned_data['graph_size']
 			p = form.cleaned_data['p']
 			Populate(d_id, pop_size, graph_size, p)
-			return dish_id(request, d_id) 
+			from petridish.dish.models import Dish
+			Dish.objects.get(pk = d_id).eval_fitness()
+			return redirect (dish_id, d_id = d_id) 
 	else:
 		form = Populate_form()
 		return render_to_response('graph/populate.html', {'action' : reverse(populate, args = [d_id]), 'form' : form})

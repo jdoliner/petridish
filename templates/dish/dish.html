@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block data %}
-<p> Organisms </p>
 {% for dish in dishes %}
 	{% url petridish.dish.views.dish_id dish.id as dish_url %}
 	<li><a href="{{ dish_url}}">{{dish.name}}</a></li>

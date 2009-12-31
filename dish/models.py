@@ -48,6 +48,10 @@ class Dish(models.Model):
 			new_org.save()
 		self.generation = self.generation + 1
 		self.save()
+	def new_generation(self):
+		self.breed(len(self.organisms()))
+		self.eval_fitness()
+		
 		
 
 class Dish_form(forms.Form):

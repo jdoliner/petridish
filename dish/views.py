@@ -29,7 +29,7 @@ def properties(request, d_id):
 			dish.name = form.cleaned_data['name']
 			id = form.cleaned_data['fitness_f']
 			function = Fitness_Function.objects.get(id = id)
-			dish.function = function
+			dish.fitness = function
 			dish.save()
 			return redirect(dish_id, d_id = dish.id)
 	else:
@@ -47,12 +47,14 @@ def dish(request):
 	
 
 def dish_id_toolbar(d_id):
-	tools = []
-	tools.append(('My Dishes', reverse(dish))),
-	tools.append(('Populate', reverse(populate, args = [d_id])))
-	tools.append(('Properties', reverse(properties, args = [d_id])))
-	tools.append(('Clear', reverse(clear, args = [d_id])))
-	tools.append(('Delete', reverse(delete, args = [d_id])))
+	tools = [
+	('My Dishes', reverse(dish)),
+	('Populate', reverse(populate, args = [d_id])),
+	('Go', reverse(go, args = [d_id])),
+	('Properties', reverse(properties, args = [d_id])),
+	('Clear', reverse(clear, args = [d_id])),
+	('Delete', reverse(delete, args = [d_id])),
+	]
 	return tools
 
 def dish_id_scrollers(d_id, generation):
@@ -87,19 +89,21 @@ def populate(request, d_id):
 				pass #this should be an error
 	else:
 		form = Populate_form()
-		return render_to_response('dish/populate.html', {'action': reverse(populate, args = [d_id]), 'form': form})		
+		return render_to_response('dish/populate.html', {'action': reverse(populate, args = [d_id]), 'form': form})
+
+def go(request, d_id):
+	dish = Dish.objects.get(pk = d_id)
+	dish.new_generation()
+	return redirect(dish_id, d_id = d_id)
 
 def clear(request, d_id):
 	dish = Dish.objects.get(pk = d_id)
 	organisms = Organism.objects.filter(dish = dish)
 	for o in organisms:
-		try:
-			o.graph
-		except:
-			pass
-		else:
-			o.graph.delete()
-	return dish_id(request, d_id)
+		o.unabstract().delete()
+	dish.generation = 0
+	dish.save()
+	return redirect(dish_id, d_id = d_id)
 
 def delete(request, d_id):
 	clear(request, d_id)
