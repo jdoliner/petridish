@@ -55,10 +55,22 @@ def dish_id_toolbar(d_id):
 	tools.append(('Delete', reverse(delete, args = [d_id])))
 	return tools
 
-def dish_id(request, d_id):
+def dish_id_scrollers(d_id, generation):
+	scrollers = []
+	if (int(generation) != 0):
+		scrollers.append(('|<<', reverse(dish_id, args = [d_id, 0])))
+		scrollers.append(('<', reverse(dish_id, args = [d_id, int(generation) - 1])))
+	scrollers.append(('-', reverse(dish_id, args = [d_id])))
+	scrollers.append(('>', reverse(dish_id, args = [d_id, int(generation) + 1])))
+	scrollers.append(('>>|', reverse(dish_id, args = [d_id])))
+	return scrollers 
+
+def dish_id(request, d_id, generation = -1):
 	dish = Dish.objects.get(pk = d_id)
-	organisms = dish.organisms()
-	return render_to_response('dish/dish_id.html', {'dish': dish, 'fitness_function': dish.fitness, 'organisms': organisms, 'tools': dish_id_toolbar(d_id)})
+	if (generation == -1):
+		generation = dish.generation
+	organisms = dish.organisms(generation)
+	return render_to_response('dish/dish_id.html', {'dish': dish, 'fitness_function': dish.fitness, 'organisms': organisms, 'tools': dish_id_toolbar(d_id), 'scrollers': dish_id_scrollers(d_id, generation)})
 
 def populate(request, d_id):
 	from petridish.dish.models import Populate_form

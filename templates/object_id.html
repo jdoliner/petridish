@@ -11,6 +11,16 @@
 No header block provided.
 {% endblock %}
 
+{% block scrollers %}
+{% if scrollers %}
+	<p>
+	{% for name, url in scrollers %}
+		<a href={{url}}>_{{name}}_</a>
+	{% endfor %}
+{% endif %}
+{% endblock %}
+
 {% block data %}
 No data block provided.
 {% endblock %}
+
