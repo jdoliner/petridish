@@ -82,4 +82,5 @@ INSTALLED_APPS = (
     'petridish.dish',
     'petridish.graph',
     'petridish.function',
+    'petridish.evolver',
 )
