@@ -4,6 +4,8 @@ from django import forms
 class Dish(models.Model):
 	name = models.CharField(max_length=20)
 	fitness = models.ForeignKey('function.Fitness_Function', null=True)
+	fitness_cap = models.IntegerField(null = True)
+	evolver = models.ForeignKey('evolver.Evolver', null = True)
 	generation = models.IntegerField()
 	born = models.DateTimeField('birthdate')
 	def __unicode__(self):
@@ -26,6 +28,8 @@ class Dish(models.Model):
 			except:
 				o.fitness = 0
 			o.save()
+	def best_fitness(self):
+		return self.organisms()[0].fitness
 	def breed(self, target_pop_size):
 		for i in range(target_pop_size):
 			organisms = self.organisms()
@@ -51,7 +55,13 @@ class Dish(models.Model):
 	def new_generation(self):
 		self.breed(len(self.organisms()))
 		self.eval_fitness()
-		
+	def register(self, evolver):
+		self.evolver = evolver
+		self.save()
+		evolver.ping(self)
+	def unregister(self):
+		self.evolver = None
+		self.save()
 		
 
 class Dish_form(forms.Form):
@@ -64,4 +74,4 @@ class Properties_form(forms.Form):
 	from petridish.function.models import Fitness_Function
 	name = forms.CharField(max_length=20)
 	functions = Fitness_Function.objects.all()
-	fitness_f = forms.ChoiceField(map(lambda f: (f.id, f.name), functions))
+	#fitness_f = forms.ChoiceField(map(lambda f: (f.id, f.name), functions))

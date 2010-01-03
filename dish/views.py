@@ -47,10 +47,11 @@ def dish(request):
 	
 
 def dish_id_toolbar(d_id):
+	from petridish.evolver.views import register
 	tools = [
 	('My Dishes', reverse(dish)),
 	('Populate', reverse(populate, args = [d_id])),
-	('Go', reverse(go, args = [d_id])),
+	('Register', reverse(register, args = [d_id])),
 	('Properties', reverse(properties, args = [d_id])),
 	('Clear', reverse(clear, args = [d_id])),
 	('Delete', reverse(delete, args = [d_id])),
